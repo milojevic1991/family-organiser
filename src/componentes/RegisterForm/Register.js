@@ -1,24 +1,23 @@
-import React,{useState} from "react";
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Form, Input, Button, Icon } from "antd";
 
-import firebase from '../../config/firebase';
+import firebase from "../../config/firebase";
 
 const Register = () => {
-
-   const [stateTest,setStateTest] = useState({});
-   const history = useHistory();
+  const [registerUser, setRegisterUser] = useState();
+  const history = useHistory();
 
 
   const onFinish = (values) => {
-     setStateTest(values);
-     console.log("Success register:", stateTest);
-     onRegister();
+    setRegisterUser(values);
+    onRegister(values.email, values.password);
+    history.push("/");
   };
 
-  const onRegister = async() => {
-     firebase.register('nemanja','mil','cao','zdarav');
-  }
+  const onRegister = async (email, pass) => {
+    firebase.register(email, pass);
+  };
 
   
   return (
@@ -29,9 +28,9 @@ const Register = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="E-mail"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
         >
           <Input />
         </Form.Item>
@@ -39,21 +38,28 @@ const Register = () => {
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[
+            { required: true, message: "Please input your password!" },
+            { min: 5, message: "Password' must be at least 6 characters", validateTrigger: "onBlur" },
+         
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item name="name" label="First name" rules={[{ required: false }]}>
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="lastName"
+          label="Last name"
+          rules={[{ required: false }]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item   name="firstName" label="First name" rules={[{ required: false }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item   name="lastName" label="Last name" rules={[{ required: false }]}>
-        <Input />
-      </Form.Item>
-
-        <Button type="primary" 
-        htmlType="submit">
+        <Button type="primary" htmlType="submit">
           Submit
         </Button>
       </Form>
