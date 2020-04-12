@@ -1,23 +1,46 @@
-import React, { useState } from "react";
+import React, { useState,useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { Form, Input, Button, Icon } from "antd";
+//React Hook
+import {useDispatch,useSelector} from 'react-redux';
+import * as actions from '../../store/actions/register';
+
+import { Form, Input, Button, Icon ,Spin ,Alert} from "antd";
 
 import firebase from "../../config/firebase";
 
 const Register = () => {
+
   const [registerUser, setRegisterUser] = useState();
   const history = useHistory();
 
+  const registerState = useSelector(state =>state.register)
+  console.log('registerState',registerState);
+
+  const dispatch = useDispatch();
+
 
   const onFinish = (values) => {
-    setRegisterUser(values);
-    onRegister(values.email, values.password);
-    history.push("/");
+
+    // dispatch(actions.registerSubmit());
+
+    dispatch(actions.registerSubmit(values.email,values.password));
+    // setRegisterUser(values);
+    // firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+    // .then((res) => {
+    //   console.log('res',res);
+
+      
+    // })
+    // .catch((err) => {
+    //   console.log('err',err);
+      
+    // })
+    // history.push("/");
   };
 
-  const onRegister = async (email, pass) => {
-    firebase.register(email, pass);
-  };
+  // const onRegister = async (email, pass) => {
+  //   firebase.register(email, pass);
+  // };
 
   
   return (
@@ -58,7 +81,8 @@ const Register = () => {
         >
           <Input />
         </Form.Item>
-
+        {registerState.error ? <Alert message={registerState.error.message } type="error" /> : null }
+        {registerState.loading ? <Spin /> : null }
         <Button type="primary" htmlType="submit">
           Submit
         </Button>

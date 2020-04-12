@@ -1,30 +1,45 @@
-import React,{useState} from "react";
+import React,{useEffect} from "react";
 import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Icon } from "antd";
+import { Form, Input, Button, Icon ,Spin ,Alert} from "antd";
 import { Typography } from 'antd';
 import classes from "./Login.module.css";
 import firebase from '../../config/firebase';
 
+
+//Redux Hooks
+import {useDispatch,useSelector} from 'react-redux';
+import * as actions from '../../store/actions/login';
+
 const { Text } = Typography;
+
 
 const Login = () => {
 
-const [errState, errSet] = useState('');
+  const dispatch = useDispatch();
+  const loginState = useSelector(state =>state.login)
+
+// const [errState, errSet] = useState('');
    const history = useHistory();
 
-
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    firebase.login(values.email,values.password)
-    .then((response) => {
-      console.log('response',response);
-      history.push('/');
-    })
-    .catch((err) => {
-      errSet(err);
-      console.log('err',err);
+   useEffect(() => {
+     console.log('u use efectu sam',loginState);
+     if(loginState.toLog) {
+       // history.push('/');
+       console.log('u use efectu sam i prosam sam',loginState);
+    } 
       
-    })
+   },[loginState])
+
+
+  const onFinish =   (values) => {
+    
+    console.log('loginState na klik',loginState);
+     dispatch(actions.loginSubmit(values.email,values.password));
+
+     console.log('loginState ispod dispatcha da vidimo sta se desava',loginState);
+    
+   
+
   
   };
 
@@ -60,8 +75,8 @@ const [errState, errSet] = useState('');
         >
           <Input.Password />
         </Form.Item>
-        {errState ? <Text type="danger">{errState.message}</Text> : null }
-        
+        {loginState.error ? <Alert message={loginState.error.message } type="error" /> : null }
+        {loginState.loading ? <Spin /> : null }
         <Button type="primary" 
         htmlType="submit">
           Submit

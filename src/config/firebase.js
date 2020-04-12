@@ -1,4 +1,4 @@
-import FirebaseApp from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firebase-firestore';
 
@@ -14,32 +14,35 @@ const firebaseConfig = {
    measurementId: "G-4ZTR7L0GWX"
 }
 
-
-class Firebase {
-   constructor(){
-      FirebaseApp.initializeApp(firebaseConfig)
-      this.auth = FirebaseApp.auth();
-      this.db = FirebaseApp.firestore();
-
-   }
-
-   login(email,password){
-      return this.auth.signInWithEmailAndPassword(email,password);
-   }
-
-   async register (email,password,firstName,lastName){
-      await this.auth.createUserWithEmailAndPassword(email,password);
-
-      return this.auth.currentUser.updateProfile({
-         displayName:firstName + lastName
-      })
-   }
-
-   logout(){
-       return this.auth.signOut();
-   }
-
-}
+firebase.initializeApp(firebaseConfig)
+export default firebase;
 
 
-export default new Firebase();
+// class Firebase {
+//    constructor(){
+//       FirebaseApp.initializeApp(firebaseConfig)
+//       this.auth = FirebaseApp.auth();
+//       this.db = FirebaseApp.firestore();
+
+//    }
+
+//    login(email,password){
+//       return this.auth.signInWithEmailAndPassword(email,password);
+//    }
+
+//    async register (email,password,firstName,lastName){
+//       await this.auth.createUserWithEmailAndPassword(email,password);
+
+//       return this.auth.currentUser.updateProfile({
+//          displayName:firstName + lastName
+//       })
+//    }
+
+//    logout(){
+//        return this.auth.signOut();
+//    }
+
+// }
+
+
+// export default new Firebase();
