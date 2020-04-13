@@ -12,11 +12,14 @@ function App() {
   return (
     <BrowserRouter>
     <div className ='App'>
-      <Route exact path="/" component={Home}></Route>
-      <Route exact path="/login" component={Login}></Route>
+      <Switch>
+
+      <Route  exact path="/login" component={Login}></Route>
+      <Route   path="/" component={Home}></Route>
       <Route exact path="/register" component={Register}></Route>
       <Button href='/login' type="primary">Login</Button>
       <Button href='/register' type="primary">Register</Button>
+      </Switch>
     </div>
     </BrowserRouter>
   );
