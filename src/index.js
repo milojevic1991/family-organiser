@@ -9,13 +9,15 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk'
 import login from './store/reducers/login';
 import register from './store/reducers/register';
+import planner from './store/reducers/planner';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const combinedReducers = combineReducers({
   login,
-  register
+  register,
+  planner
 
 })
 const store = createStore(combinedReducers,composeEnhancers(applyMiddleware(thunk)));
