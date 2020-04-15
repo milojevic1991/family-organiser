@@ -16,7 +16,7 @@ export const plannerSubmit =  (data) => {
 
       console.log('res',res);
       
-      dispatch(plannerSuccess(res.data))
+      dispatch(plannerSuccess(res))
       
    }
    
@@ -51,7 +51,11 @@ export const plannerFetchData = () =>{
          dispatch(plannerFetchDataError(err));
       })
 
-      dispatch(plannerFetchDataSuccess(Object.values(res.data)));
+      if(res.data){
+         
+         console.log('fetch data',Object.values(res.data));
+         dispatch(plannerFetchDataSuccess(Object.values(res.data)));
+      }
    }
 
 }
