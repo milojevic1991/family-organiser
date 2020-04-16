@@ -47,7 +47,7 @@ export const plannerError = (err) => {
 export const plannerFetchData = () =>{
    return async dispatch =>{
 
-      let res = await axios.get('/plannerTasks.json').catch(err=>{
+      const res = await axios.get('/plannerTasks.json').catch(err=>{
          dispatch(plannerFetchDataError(err));
       })
 

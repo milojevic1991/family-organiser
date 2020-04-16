@@ -1,31 +1,24 @@
-import React ,{useEffect, useCallback}from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Form, Input, Button, Checkbox } from "antd";
-import PlannerItem from "./PlannerItem/PlannerItem";
+import React, { useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Form, Input, Button, Checkbox } from 'antd';
+import PlannerItem from './PlannerItem/PlannerItem';
 
-import axios from "../../axios-firebase";
-import * as actions from "../../store/actions/planner";
+import axios from '../../axios-firebase';
+import * as actions from '../../store/actions/planner';
+
 const Planner = () => {
-
   const dispatch = useDispatch();
 
+  const onFinish = (value) => {
+    dispatch(actions.plannerSubmit(value));
 
-  const onFinish =  (value) => {
-    
-    dispatch(actions.plannerSubmit(value))
-  
-      console.log('on FINISH');
-
+    console.log('on FINISH');
   };
- 
+
   useEffect(() => {
-  
     dispatch(actions.plannerFetchData());
-    console.log('use efect proba');
-  },[dispatch,onFinish])
-  
-  
- 
+    // console.log('use efect proba');
+  }, [dispatch]);
 
   return (
     <div>
@@ -47,9 +40,7 @@ const Planner = () => {
         </Button>
       </Form>
 
-      <PlannerItem
-      sumbitPlanner = { onFinish}
-      />
+      <PlannerItem sumbitPlanner={onFinish} />
     </div>
   );
 };
