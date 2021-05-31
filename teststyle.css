@@ -1,9 +1,9 @@
 /* Style for Title and description */
 .title{
         margin: 10px 5px;
-        color: red;
+        color: orange;
         font-weight: bold;
-        font-size: 1.1em;
+        font-size: 2em;
 }
 .description{
         margin: 10px 5px;
